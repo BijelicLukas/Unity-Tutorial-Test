@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7663193974072652051}
   - component: {fileID: 6823724017988292931}
+  - component: {fileID: 2717648076377575236}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -48,6 +49,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   speed: 10
   data: {fileID: 11400000, guid: 77dbc88da51394c49a75294a4b5db1a5, type: 2}
+--- !u!114 &2717648076377575236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 277938350684688582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b68bb07c7bee53b4fb16cd232587e895, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerShooting
+  Bullet: {fileID: 6599718285182602189, guid: aad18b445143abd478f7450e243f341b, type: 3}
 --- !u!1 &1811258399424175575
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,8 +337,8 @@ GameObject:
   - component: {fileID: 4855257319186931057}
   - component: {fileID: 3923821512201034631}
   - component: {fileID: 3234373451000657637}
-  - component: {fileID: 2565076073789599741}
-  - component: {fileID: 656435057912861226}
+  - component: {fileID: 9020406009694853722}
+  - component: {fileID: 5864874118064898610}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -340,7 +354,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3599984251519740543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.0038397175, y: 0, z: 0, w: 0.99999267}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -348,7 +362,7 @@ Transform:
   - {fileID: 4390307886085712546}
   - {fileID: 4503745223672559793}
   m_Father: {fileID: 7663193974072652051}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.44, y: 0, z: 0}
 --- !u!33 &2166905955568427667
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -455,7 +469,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!114 &2565076073789599741
+--- !u!114 &9020406009694853722
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -468,7 +482,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLook
   data: {fileID: 11400000, guid: 77dbc88da51394c49a75294a4b5db1a5, type: 2}
---- !u!114 &656435057912861226
+--- !u!114 &5864874118064898610
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -510,7 +524,19 @@ MonoBehaviour:
     m_ActionId: b27d3a9a-e2bf-4828-84af-f32cd47fbf19
     m_ActionName: 'Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2717648076377575236}
+        m_TargetAssemblyTypeName: PlayerShooting, Assembly-CSharp
+        m_MethodName: OnShooting
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 44f13bd0-fe48-48b1-8a10-135fc8a3bfe1
     m_ActionName: 'Player/Shoot[/Mouse/leftButton]'
   m_NeverAutoSwitchControlSchemes: 0

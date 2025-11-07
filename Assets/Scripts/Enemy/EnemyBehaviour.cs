@@ -28,7 +28,8 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.tag != "player") return;
+        if (collision.transform.tag != "bullet") return;
+        Destroy(collision.gameObject);
         Destroy(gameObject);
     }
 }
