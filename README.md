@@ -393,13 +393,15 @@ And in the script of the Bullet:
 Alright next up would be to add HP and the UI.
 ## UI
 ### Healthbar
-> First off, we merge the Shooting branch back to our main branch.<br><br>
-> I will continue to work in main branch since we now know how this whole branch things works.<br><br>
-> Let's make a Healthbar. For that we will add a UI-Element, specifically a Panel UI-Element.<br><br>
-> I recommend to use the Anchors to change the size and position of it, since this should make it always the same size and position for every resolution. <br><br>
-> You can duplicate the Panel and change the color. One of them has to be the Background, showing the max-HP, the other will be in the Foreground showing our current-HP.<br><br>
-> Let's make a script for the UI, so that we can adapt the Foreground Panel with our current HP.<br><br>
-> I will show you the code and explain it after. First of we will change our PlayerData script:
+First off, we merge the Shooting branch back to our main branch.  
+I will continue to work in main branch since we now know how this whole branch things works.  
+Let's make a Healthbar. For that we will add a UI-Element, specifically a Panel UI-Element.  
+
+I recommend to use the Anchors to change the size and position of it, since this should make it always the same size and position for every resolution.     
+You can duplicate the Panel and change the color. One of them has to be the Background, showing the max-HP, the other will be in the Foreground showing our current-HP. 
+
+Let's make a script for the UI, so that we can adapt the Foreground Panel with our current HP.    
+I will show you the code and explain it after. First of we will change our PlayerData script:
 ```C#
 public class PlayerData : ScriptableObject
 {
@@ -408,7 +410,7 @@ public class PlayerData : ScriptableObject
     public float maxHP, currentHP; // <-- Add this
 }
 ```
-> After that we need to change the EnemyBehaviour a bit, since now something should happen if we collide with the player:
+After that we need to change the EnemyBehaviour a bit, since now something should happen if we collide with the player:
 ```C#
 private void OnCollisionEnter(Collision collision)
     {
@@ -427,7 +429,7 @@ private void OnCollisionEnter(Collision collision)
         }
     }
 ```
-> Next up, the UI Code and this will need a bit more explanation:
+Next up, the UI Code and this will need a bit more explanation:
 ```C#
 [RequireComponent(typeof(RectTransform))]
 public class HealthUIScript : MonoBehaviour
@@ -454,14 +456,20 @@ public class HealthUIScript : MonoBehaviour
     }
 }
 ```
-> So first up, we can tell a script if the Object we are attaching to need a specific Component, in this case we need a RectTransform (the thing where we changed the anchors in our Panel-UI)<br><br>
-> Next up, we need our PlayerData, and the Background Panel to know what is the maximum lenght for the Foreground Panel. <br><br>
-> The next thing is we define our maxHP and our currentHP at the beginning of our UI Life. This is not the best idea, especially if you want to change it afterwards, since you have to search it in the code. Also you would expect it somewhere in the Player Script, not in the UI. But this is just a demo showing you possiblities not the best way to make a game. <br><br>
-> Also to make it a bit easier we put our RectTransform into a variable and the newAnchor position into a Vector2 variable. The reason for that is, we won't change the Y position of the anchor and we can't access the x anchor alone from the label, so this has to do.<br><br>
-> In the Update we have to translate the HP into the UI. In this case we find out the precentage of our current HP to the Max HP. Then use that to make our Panel corresponding to that. In this Case we will use Lerp.<br><br>
-> After that don't forget to add the script and their needed Reference and it should work.<br><br>
-> This should work for now, we can't die, but we'll get there next, but first:<br>
-> **Nice Time to Commit 👁️👁️**<br>
+So first up, we can tell a script if the Object we are attaching to need a specific Component, in this case we need a RectTransform (the thing where we changed the anchors in our Panel-UI)
+
+Next up, we need our PlayerData, and the Background Panel to know what is the maximum lenght for the Foreground Panel.
+
+The next thing is we define our maxHP and our currentHP at the beginning of our UI Life. This is not the best idea, especially if you want to change it afterwards, since you have to search it in the code. Also you would expect it somewhere in the Player Script, not in the UI. But this is just a demo showing you possiblities not the best way to make a game.   
+
+Also to make it a bit easier we put our RectTransform into a variable and the newAnchor position into a Vector2 variable. The reason for that is, we won't change the Y position of the anchor and we can't access the x anchor alone from the label, so this has to do.  
+
+In the Update we have to translate the HP into the UI. In this case we find out the precentage of our current HP to the Max HP. Then use that to make our Panel corresponding to that. In this Case we will use Lerp.  
+
+After that don't forget to add the script and their needed Reference and it should work.    
+
+This should work for now, we can't die, but we'll get there next, but first: **Nice Time to Commit 👁️👁️**  
+
 ### Highscore
 > Alright how about we make the game UI into a prefab? I would recommand to make an empty Gameobject and putting the Canvas and EventSystem in it.<br>
 > Next up we will write some Text. <br>
