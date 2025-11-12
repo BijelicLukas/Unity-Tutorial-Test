@@ -1,51 +1,52 @@
 # Documentation for Unity Tutorial
 
 ## set up Github with Unity
-> create new Unity project<br>
-> Github new repository<br>
-> Give it a Name and Description<br>
-> Local Path inside the Unity Folder (Look for Asset)<br>
-> Git ignore --> Unity<br>
-> Make sure to have the .gitignore in the Unity Folder (in case it doesn't work like usually)<br>
-> If you know already what you will need, you can already prepare some Folders. (Scripts, Material, Prefabs, Debug)<br>
-> new Branches for every major thing (Player, Enemies, Items etc.)<br>
+- Create new Unity project
+- Github new repository
+- Give it a Name and Description
+- Local Path inside the Unity Folder (Look for Asset)
+- Git ignore --> Unity
+- Make sure to have the .gitignore in the Unity Folder (in case it doesn't work like usually)  
+- If you know already what you will need, you can already prepare some Folders. (Scripts, Material, Prefabs, Debug)
+- new Branches for every major thing (Player, Enemies, Items etc.)
 
 ## Moving Player
-> Make a new Scene<br>
-> Place Floor and Player<br>
-> Make Material for funny and better sight<br>
-> Make the Player a Prefabs ASAP<br>
-> Before forgetting, If you need Collision -> GIVE RIGIDBODY<br>
-> Check the Constraints in Rigidbody<br>
-> **Nice Time to Commit 👁️👁️**<br>
-> Create Player Input<br>
-> Action Map for Player thing, Actions for the Input thing<br>
-> Depending on what you want, either Vector or just a Button press different things. Just try things out.<br>
-> **Save.**<br>
-> Back again to Player and give Player Input<br>
-> Hey we finally need our Script, so make a Script and call it PlayerMovement or something<br>
-> What was the parameter inside the function again? IDK Google it, look at documentation or ask ChatGPT (worse option). But yeah its
+- Make a new Scene  
+- Place Floor and Player  
+- Make Material for funny and better sight  
+- Make the Player a Prefabs ASAP  
+- Before forgetting, If you need Collision -> GIVE RIGIDBODY  
+- Check the Constraints in Rigidbody  
+- **Nice Time to Commit 👁️👁️**  
+- Create Player Input  
+- Action Map for Player thing, Actions for the Input thing  
+- Depending on what you want, either Vector or just a Button press different things. Just try things out.  
+- **Save.**  
+- Back again to Player and give Player Input  
+- Hey we finally need our Script, so make a Script and call it PlayerMovement or something  
+- What was the parameter inside the function again? IDK Google it, look at documentation or ask ChatGPT (worse option). But yeah its
 ```C#
 public void GetPlayerMovement(InputAction.CallbackContext context)
 {
     // Do Things
 }
 ```
-> look at context and see what it offers. Good idea for beginners.<br>
-> Read the Value of context and put it inside a Vector3 variable. Like this:
+look at context and see what it offers. Good idea for beginners.  
+Read the Value of context and put it inside a Vector3 variable. Like this:
 ```C#
 Vector3 movement = new Vector3()
-// .......
+// ...
 public void GetPlayerMovement(InputAction.CallbackContext context)
 {
     movement.x = context.ReadValue<Vector2>().x;
     movement.z = context.ReadValue<Vector2>().y;
 }
 ```
-> In Update move the Player, by coding "transform.position += movement;".<br>
-> Maybe put the camera into the Player's Prefab.<br>
-> Put the Script in the Parent and connect the Player Input with it.<br>
-> **Nice Time to Commit 👁️👁️**<br>
+In Update move the Player, by coding "transform.position += movement;".  
+Maybe put the camera into the Player's Prefab.  
+Put the Script in the Parent and connect the Player Input with it.  
+**Nice Time to Commit 👁️👁️**  
+
 > Wow the Player is super fast, yeah because we move 1 Unit per Frame. Let's add the Time.deltaTime into it. so:
 ```C#
 private void Update()
@@ -61,21 +62,27 @@ private void Update()
 public float speed;
 
 Vector 3 movement = new Vector3()
-// ......
+// ...
 private void Update()
 {
     transform.position += movement * Time.deltaTime * speed;
 }
 ```
-> Now we can change the speed value live in the Unity Editor. <br>
-> Don't forget that changes aren't being saved in gaming mode and it won't change it on the Prefab if you don't apply it directly into the Prefab or override it. <br>
-> **Nice Time to Commit 👁️👁️**<br>
+Now we can change the speed value live in the Unity Editor.
+
+> [!TIP] Changes in Gaming Mode and Prefabs
+>  Don't forget that changes aren't being saved in gaming mode and it won't change it on the Prefab if you don't apply it directly into the Prefab or override it.
+ 
+**Nice Time to Commit 👁️👁️**  
 
 ## Rotating the Player
-> We want the Player to look at the direction where the mouse is looking at, first I am going to give him some eyes so that we really can see the rotation. <br><br>
-> Now you can take the Camera to the Playermovement and let it there check. But, its the Player Movement and it can be quite confusing. Since it's a GameJam we won't be very clean with our methods and code, but we can try a bit at least. <br><br>
-> We are going to take the ScreenPoint of the Mouse in the Screen and make it into a Ray. This Ray will then be fired into the world and collide with something in the Space. We then get a Vector3 which we can than use to make our Player look at that Vector.<br><br>
-> So we make a extra CameraScript and give it to the camera of the Player. The Code inside looks like this:
+We want the Player to look at the direction where the mouse is looking at, first I am going to give him some eyes so that we really can see the rotation.
+
+Now you can take the Camera to the `PlayerMovement` and let it there check. But, its the Player Movement and it can be quite confusing. Since it's a GameJam we won't be very clean with our methods and code, but we can try a bit at least.  
+
+We are going to take the ScreenPoint of the Mouse in the Screen and make it into a Ray. This Ray will then be fired into the world and collide with something in the Space. We then get a `Vector3` which we can than use to make our Player look at that Vector.    
+
+So we make a extra CameraScript and give it to the camera of the Player. The Code inside looks like this:
 ```C#
 private void Update()
     {
@@ -83,15 +90,18 @@ private void Update()
         if(Physics.Raycast(ray,out RaycastHit hitInfo))
         {
             Vector3 lookPoint = hitInfo.point;
-            lookPoint.y = 0;    
+            lookPoint.y = 0;
         }
     }
 ```
-> Now we would like to give this Information to our PlayerMovement, and we could reference it to the GameObject but that looks awful. A much nicer approach is a middleman that stores data for the Player. So we are making **Scriptable Objects** <br><br>
-> Right-click into the Project tab and make a Script, but this time not MonoBehaviour but ScriptableObject. <br>
-> Inside we put variables that we would like to use. <br>
-> Like the Vector3 of the lookpoint, or also our speed if we want to change it via enemies behaivor or powerups. <br> 
-> After adding our lookPoint variable into the ScritableObject script we go back to our CameraScript and add this:
+Now we would like to give this Information to our `PlayerMovement`, and we could reference it to the GameObject but that looks awful. A much nicer approach is a middleman that stores data for the Player.
+
+So we will be using [**Scriptable Objects**](https://gamedevbeginner.com/scriptable-objects-in-unity/)     
+- Right-click into the Project tab and make a Script, but this time not `MonoBehaviour` but `ScriptableObject`.   
+- Inside we put variables that we would like to use.   
+- Like the Vector3 of the lookpoint, or also our speed if we want to change it via enemies behavior or powerups.    
+
+After adding our lookPoint variable into the ScritableObject script we go back to our CameraScript and add this:
 ```C#
 // Add this
 [SerializeField] PlayerData data;
@@ -109,11 +119,13 @@ private void Update()
         }
     }
 ```
-> In our Unity Project tab we create our Object of our ScriptableObject and give it to the camera.
-> Now if we start the game and look at the PlayerData we should see that the values are changing, and these Values will be then be taken by the Player, but you know what would be a great thing to do right now: <br>
-> **Nice Time to Commit 👁️👁️**<br>
-> Alright now make a PlayerLook Script and add it into the body NOT into the empty object since it would turn the camera. <br>
-> And add this little Code:
+In our Unity Project tab we create our Object of our ScriptableObject and give it to the camera.  
+Now if we start the game and look at the PlayerData we should see that the values are changing, and these Values will be then be taken by the Player, but you know what would be a great thing to do right now: 
+
+**Nice Time to Commit 👁️👁️**  
+
+Alright now make a PlayerLook Script and add it into the body NOT into the empty object since it would turn the camera.   
+And add this little Code:
 ```C#
 [SerializeField] PlayerData data;
 
@@ -123,8 +135,9 @@ private void Update()
     transform.foward = data.lookPoint - new Vector3(position.x,0,position.z);
 }
 ```
-> And now we look at where the mouse is. Crazy right? You didn't forget to give the PlayerLook Script our Scriptable Object now did you?👁️👁️<br>
-> **Nice Time to Commit 👁️👁️**<br>
+> And now we look at where the mouse is. Crazy right? You didn't forget to give the PlayerLook Script our Scriptable Object now did you?👁️👁️  
+ 
+**Nice Time to Commit 👁️👁️**  
 
 ## Making our first Enemy
 > Since we are charting new territory we will make a new Branch <br>
