@@ -471,24 +471,26 @@ After that don't forget to add the script and their needed Reference and it shou
 This should work for now, we can't die, but we'll get there next, but first: **Nice Time to Commit 👁️👁️**  
 
 ### Highscore
-> Alright how about we make the game UI into a prefab? I would recommand to make an empty Gameobject and putting the Canvas and EventSystem in it.<br>
-> Next up we will write some Text. <br>
-> Add in the Canvas "Text - TextMeshPro", there might appear something to install, just install it and continue.<br>
-> We will need 4 things:
+Alright how about we make the game UI into a prefab? I would recommend to make an empty GameObject and putting the Canvas and EventSystem in it.  
+Next up we will write some Text.   
+Add in the Canvas "Text - TextMeshPro", there might appear something to install, just install it and continue.  
 
-> * A Text that says "Score"
-> * A Score that we will change during the game
-> * A Text that says Highscore
-> * The highscore that we will change at the beginning at the game
+We will need 4 things:
+* A Text that says "Score"
+* A Score that we will change during the game
+* A Text that says Highscore
+* The highscore that we will change at the beginning at the game
 
-> Again play a bit with the Anchors of the UI. <br>
-> Write at the Text Input the information you need, like for the Score-Text you could write "Score:"<br>
-> For things like the actual Score, we can write anything because we will change it with code. <br>
-> You can also change the size and font and whatnot inside the TextMeshProUI.<br>
-> Next up the script. I will do just one script and give it to our Canvas and call it the ScoreManager.<br>
-> But before we need to change a bit in the other scripts:
+Again play a bit with the Anchors of the UI.   
+Write at the Text Input the information you need, like for the Score-Text you could write "Score:"  
 
-> First up we will need to add the following in the PlayerData
+For things like the actual Score, we can write anything because we will change it with code.   
+You can also change the size and font and whatnot inside the TextMeshProUI.  
+
+Next up the script. I will do just one script and give it to our Canvas and call it the ScoreManager.  
+But before we need to change a bit in the other scripts:
+
+First up we will need to add the following in the `PlayerData`
 ```C#
 public class PlayerData : ScriptableObject
 {
@@ -498,8 +500,7 @@ public class PlayerData : ScriptableObject
     public int highScore, score; // <----- this right here
 }
 ```
-
-> Next up the EnemyBehaivour should increase our score if he dies
+Next up the `EnemyBehaivour` should increase our score if he dies
 ```C#
 private void OnCollisionEnter(Collision collision)
     {
@@ -519,8 +520,7 @@ private void OnCollisionEnter(Collision collision)
         }
     }
 ```
-
-> and at last our ScoreManager
+and finally our `ScoreManager`
 ```C#
     [SerializeField] PlayerData data;
     [SerializeField] TextMeshProUGUI scoreText;
@@ -543,15 +543,22 @@ private void OnCollisionEnter(Collision collision)
 
     }
 ```
-> if the TextMeshProUGUI doesn't work, than click on it and Press ALT+. to open the hint thingy. There should be a way to import TMPro.<br><br>
-> We will need the PlayerData for the high- & score and our two UI-Text we want to change. <br><br>
-> We begin the UI with overwriting the highscore Text with the last highscore we wrote (in this case it will be 0 because that's the default value for int).<br><br>
-> Next up in the update we will write the score and look if we are still alive. <br><br>
-> if we are dead we will look if we made a new record, if so we overwrite the highscore. <br><br>
-> Don't forget to add the component to the script and this should be it. We are not done yet, there is just a small bit to make it feel like a game, but before that: <br><br>
-> **Nice Time to Commit 👁️👁️**<br><br>
-> So to make it more like a game we need to have a GameOver screen and make the enemy spawn infinity.<br><br>
-> Let's begin with the enemy spawning.<br>
+> [!TIP]
+> If the TextMeshProUGUI doesn't work, than click on it and Press ALT+. to open the hint thingy. There should be a way to import TMPro.    
+
+We will need the `PlayerData` for the high- & score and our two UI-Text we want to change.  
+We begin the UI with overwriting the highscore Text with the last highscore we wrote (in this case it will be 0 because that's the default value for int).  
+
+Next up in the update we will write the score and look if we are still alive.  
+
+If we are dead we will look if we made a new record, if so we overwrite the highscore.  
+
+Don't forget to add the component to the script and this should be it. We are not done yet, there is just a small bit to make it feel like a game, but before that:  
+
+**Nice Time to Commit 👁️👁️**    
+
+So to make it more like a game we need to have a GameOver screen and make the enemy spawn infinity.    
+Let's begin with the enemy spawning.  
 ### Enemy Spawning
 > I am going to make a new scene, the Game Scene. In here we put our important stuff first, a Floor, GameUI and our Player.<br><br>
 > We will now make a big box and call it the arena, you can make it invinsible (by deactivating the Mesh Renderer) because we will just teleport our Player if he goes outside the box.<br><br>
